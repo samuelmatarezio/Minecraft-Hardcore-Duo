@@ -235,27 +235,27 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--fg);display
   <input type="text" id="sb-search" placeholder="Buscar mod..." oninput="sidebarSearch(this.value)">
   <div class="sb-section">
     <div class="sb-label">Início</div>
-    <a class="sb-link active" onclick="scrollTo('hero')">Capa</a>
-    <a class="sb-link" onclick="scrollTo('start')">Como Começar</a>
-    <a class="sb-link" onclick="scrollTo('progressao')">Progressão</a>
+    <a class="sb-link active" onclick="navTo('hero')">Capa</a>
+    <a class="sb-link" onclick="navTo('start')">Como Começar</a>
+    <a class="sb-link" onclick="navTo('progressao')">Progressão</a>
   </div>
   <div class="sb-section">
     <div class="sb-label">Enciclopédia</div>
-    <a class="sb-link" onclick="scrollTo('mods')">Todos os Mods <span class="sb-badge">323</span></a>
-    <a class="sb-link" onclick="scrollTo('tinkers')">Tinkers' Construct</a>
-    <a class="sb-link" onclick="scrollTo('vilas')">Vilas + MineColonies</a>
-    <a class="sb-link" onclick="scrollTo('create')">Create</a>
-    <a class="sb-link" onclick="scrollTo('comida')">Comida + Farming</a>
-    <a class="sb-link" onclick="scrollTo('aventura')">Aventura + Dungeons</a>
-    <a class="sb-link" onclick="scrollTo('construcao')">Construção</a>
-    <a class="sb-link" onclick="scrollTo('transporte')">Transporte</a>
-    <a class="sb-link" onclick="scrollTo('qol')">QoL + Interface</a>
+    <a class="sb-link" onclick="navTo('mods')">Todos os Mods <span class="sb-badge">323</span></a>
+    <a class="sb-link" onclick="navTo('tinkers')">Tinkers' Construct</a>
+    <a class="sb-link" onclick="navTo('vilas')">Vilas + MineColonies</a>
+    <a class="sb-link" onclick="navTo('create')">Create</a>
+    <a class="sb-link" onclick="navTo('comida')">Comida + Farming</a>
+    <a class="sb-link" onclick="navTo('aventura')">Aventura + Dungeons</a>
+    <a class="sb-link" onclick="navTo('construcao')">Construção</a>
+    <a class="sb-link" onclick="navTo('transporte')">Transporte</a>
+    <a class="sb-link" onclick="navTo('qol')">QoL + Interface</a>
   </div>
   <div class="sb-section">
     <div class="sb-label">Referência</div>
-    <a class="sb-link" onclick="scrollTo('materiais')">Materiais Tinkers</a>
-    <a class="sb-link" onclick="scrollTo('origens')">Origins</a>
-    <a class="sb-link" onclick="scrollTo('seed')">Seeds + Mapas</a>
+    <a class="sb-link" onclick="navTo('materiais')">Materiais Tinkers</a>
+    <a class="sb-link" onclick="navTo('origens')">Origins</a>
+    <a class="sb-link" onclick="navTo('seed')">Seeds + Mapas</a>
   </div>
 </nav>
 
@@ -1452,7 +1452,7 @@ function copySeed() {
 }
 
 // ===== SCROLL SPY =====
-function scrollTo(id) {
+function navTo(id) {
   document.getElementById(id).scrollIntoView({behavior:'smooth'});
 }
 
