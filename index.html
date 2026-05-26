@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samuel + Caleb — Wiki Hardcore Duo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F1117;--bg2:#13161f;--card:#1A1D2E;--card2:#1e2235;
+  --green:#4ADE80;--blue:#60A5FA;--gold:#F59E0B;--red:#F87171;--purple:#c084fc;--cyan:#22d3ee;
+  --fg:#E8EAF0;--muted:#6B7280;--border:#252836;--border2:#2d3147;
+  --sidebar:240px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--fg);display:flex;min-height:100vh;overflow-x:hidden}
+
+/* SIDEBAR */
+#sidebar{
+  width:var(--sidebar);min-width:var(--sidebar);height:100vh;position:sticky;top:0;
+  background:var(--bg2);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow-y:auto;z-index:100;
+}
+.sb-logo{padding:20px 16px 12px;border-bottom:1px solid var(--border)}
+.sb-logo-t{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;color:var(--green);letter-spacing:.05em}
+.sb-logo-s{font-size:11px;color:var(--muted);margin-top:2px}
+#sb-search{
+  margin:12px 10px;padding:8px 12px;background:var(--card);border:1px solid var(--border);
+  border-radius:8px;color:var(--fg);font-size:13px;outline:none;width:calc(100% - 20px);
+  font-family:'Inter',sans-serif;
+}
+#sb-search:focus{border-color:var(--green)}
+#sb-search::placeholder{color:var(--muted)}
+.sb-section{padding:4px 0}
+.sb-label{padding:8px 16px 4px;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.sb-link{
+  display:block;padding:7px 16px;font-size:13px;color:var(--muted);text-decoration:none;
+  border-left:2px solid transparent;transition:.15s;cursor:pointer;
+}
+.sb-link:hover{color:var(--fg);background:rgba(255,255,255,.03)}
+.sb-link.active{color:var(--green);border-left-color:var(--green);background:rgba(74,222,128,.05)}
+.sb-badge{float:right;font-size:10px;background:var(--border2);color:var(--muted);padding:1px 6px;border-radius:10px}
+
+/* MAIN */
+#main{flex:1;overflow-y:auto;scroll-behavior:smooth}
+
+/* HERO */
+#hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:60px 40px;position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(74,222,128,.07) 0%, transparent 70%),
+             radial-gradient(ellipse 60% 40% at 80% 80%, rgba(96,165,250,.05) 0%, transparent 60%);
+}
+.hero-pack{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:16px}
+.hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(36px,5vw,64px);font-weight:700;line-height:1.1;margin-bottom:16px}
+.hero-title span{color:var(--green)}
+.hero-sub{font-size:16px;color:var(--muted);max-width:500px;line-height:1.6;margin-bottom:36px}
+.hero-stats{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-bottom:40px}
+.hstat{background:rgba(26,29,46,.8);border:1px solid var(--border2);backdrop-filter:blur(12px);
+  border-radius:12px;padding:16px 24px;text-align:center;min-width:120px}
+.hstat-n{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:var(--green)}
+.hstat-l{font-size:11px;color:var(--muted);margin-top:2px}
+.hero-seed{
+  font-family:'JetBrains Mono',monospace;font-size:13px;background:var(--card);
+  border:1px solid var(--border2);border-radius:8px;padding:10px 20px;color:var(--cyan);
+  cursor:pointer;transition:.2s;
+}
+.hero-seed:hover{border-color:var(--cyan);background:rgba(34,211,238,.05)}
+
+/* SECTIONS */
+.section{padding:64px 48px;max-width:1100px;margin:0 auto}
+.section+.section{border-top:1px solid var(--border)}
+.sec-label{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.sec-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(24px,3vw,36px);font-weight:700;margin-bottom:8px}
+.sec-sub{font-size:15px;color:var(--muted);line-height:1.6;margin-bottom:36px;max-width:640px}
+
+/* CARDS GRID */
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+.card{
+  background:rgba(26,29,46,.6);border:1px solid var(--border);border-radius:12px;padding:20px;
+  backdrop-filter:blur(12px);transition:.2s;
+}
+.card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.card.star{border-color:rgba(74,222,128,.2)}
+.card.star:hover{border-color:rgba(74,222,128,.5);box-shadow:0 8px 32px rgba(74,222,128,.08)}
+.card-cat{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.card-name{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;margin-bottom:6px}
+.card-short{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.card-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:10px;padding:2px 8px;border-radius:10px;background:var(--border2);color:var(--muted)}
+.tag.green{background:rgba(74,222,128,.1);color:var(--green)}
+.tag.blue{background:rgba(96,165,250,.1);color:var(--blue)}
+.tag.gold{background:rgba(245,158,11,.1);color:var(--gold)}
+.tag.purple{background:rgba(192,132,252,.1);color:var(--purple)}
+.btn-detail{
+  margin-top:12px;padding:6px 12px;background:transparent;border:1px solid var(--border2);
+  border-radius:6px;color:var(--muted);font-size:12px;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif;
+}
+.btn-detail:hover{border-color:var(--green);color:var(--green)}
+
+/* FILTROS */
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.f-btn{
+  padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;
+  color:var(--muted);font-size:12px;font-weight:500;cursor:pointer;transition:.15s;font-family:'Inter',sans-serif;
+}
+.f-btn:hover{border-color:var(--border2);color:var(--fg)}
+.f-btn.active{background:rgba(74,222,128,.1);border-color:var(--green);color:var(--green)}
+
+/* PROGRESSION TIMELINE */
+.tl{display:flex;gap:0;overflow-x:auto;padding-bottom:12px;margin-bottom:32px}
+.tl-phase{
+  flex:1;min-width:140px;padding:16px;border-top:3px solid var(--border);
+  cursor:pointer;transition:.2s;position:relative;
+}
+.tl-phase:hover{border-top-color:var(--border2)}
+.tl-phase.active{border-top-color:var(--green)}
+.tl-phase::before{
+  content:'';position:absolute;top:-7px;left:16px;width:12px;height:12px;
+  border-radius:50%;background:var(--border);border:2px solid var(--bg);transition:.2s;
+}
+.tl-phase.active::before{background:var(--green)}
+.tl-n{font-size:10px;font-weight:600;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.tl-t{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;margin-bottom:8px}
+.tl-mods{display:flex;flex-direction:column;gap:3px}
+.tl-mod{font-size:11px;color:var(--muted)}
+.tl-mod::before{content:'→ '}
+.tl-content{display:none;grid-column:1/-1}
+.tl-content.visible{display:block}
+
+/* TINKERS TABLE */
+.mat-table{width:100%;border-collapse:collapse;font-size:13px}
+.mat-table th{
+  text-align:left;padding:10px 12px;font-size:10px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);
+}
+.mat-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.mat-table tr:hover td{background:rgba(255,255,255,.02)}
+.phase-pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
+.ph-early{background:rgba(74,222,128,.1);color:var(--green)}
+.ph-mid{background:rgba(96,165,250,.1);color:var(--blue)}
+.ph-nether{background:rgba(245,158,11,.1);color:var(--gold)}
+.ph-end{background:rgba(192,132,252,.1);color:var(--purple)}
+.stars{color:var(--gold)}
+
+/* MODAL */
+#modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);
+  z-index:200;opacity:0;pointer-events:none;transition:.2s;
+}
+#modal-overlay.open{opacity:1;pointer-events:all}
+#modal{
+  position:fixed;right:0;top:0;height:100vh;width:min(480px,100vw);
+  background:var(--bg2);border-left:1px solid var(--border);overflow-y:auto;
+  z-index:201;transform:translateX(100%);transition:.25s cubic-bezier(.4,0,.2,1);
+}
+#modal.open{transform:translateX(0)}
+.modal-inner{padding:32px}
+.modal-close{
+  float:right;background:transparent;border:1px solid var(--border);border-radius:6px;
+  color:var(--muted);padding:4px 10px;cursor:pointer;font-size:14px;margin-bottom:20px;
+  font-family:'Inter',sans-serif;transition:.15s;
+}
+.modal-close:hover{border-color:var(--fg);color:var(--fg)}
+.modal-cat{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.modal-name{font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;margin-bottom:12px}
+.modal-section{margin-top:20px}
+.modal-section-t{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.modal-section p,.modal-section li{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:4px}
+.modal-section li::before{content:'→ ';color:var(--green)}
+.modal-section ul{list-style:none;padding:0}
+
+/* CALLOUT */
+.callout{
+  background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.2);
+  border-radius:12px;padding:20px;margin:24px 0;
+}
+.callout-t{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:var(--green);margin-bottom:8px}
+.callout p{font-size:14px;color:var(--muted);line-height:1.6}
+
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+.step{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center}
+.step-n{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;color:rgba(74,222,128,.3);margin-bottom:8px}
+.step-t{font-size:14px;font-weight:600;margin-bottom:6px}
+.step-d{font-size:13px;color:var(--muted);line-height:1.5}
+
+/* SEARCH RESULTS */
+#search-results{margin-top:12px}
+#no-results{display:none;text-align:center;padding:40px;color:var(--muted);font-size:14px}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--muted)}
+
+/* TOAST */
+#toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--card);border:1px solid var(--green);border-radius:8px;
+  padding:10px 20px;font-size:13px;color:var(--green);
+  transition:.3s;z-index:300;opacity:0;
+}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* FASE COLORS */
+[data-color="green"]{color:var(--green)}[data-color="blue"]{color:var(--blue)}
+[data-color="gold"]{color:var(--gold)}[data-color="purple"]{color:var(--purple)}
+[data-color="red"]{color:var(--red)}[data-color="cyan"]{color:var(--cyan)}
+
+.sep{height:1px;background:var(--border);margin:40px 0}
+.mono{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan)}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-t">⚔ Hardcore Duo Wiki</div>
+    <div class="sb-logo-s">Samuel + Caleb · Life in the Village 4</div>
+  </div>
+  <input type="text" id="sb-search" placeholder="Buscar mod..." oninput="sidebarSearch(this.value)">
+  <div class="sb-section">
+    <div class="sb-label">Início</div>
+    <a class="sb-link active" onclick="scrollTo('hero')">Capa</a>
+    <a class="sb-link" onclick="scrollTo('start')">Como Começar</a>
+    <a class="sb-link" onclick="scrollTo('progressao')">Progressão</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-label">Enciclopédia</div>
+    <a class="sb-link" onclick="scrollTo('mods')">Todos os Mods <span class="sb-badge">323</span></a>
+    <a class="sb-link" onclick="scrollTo('tinkers')">Tinkers' Construct</a>
+    <a class="sb-link" onclick="scrollTo('vilas')">Vilas + MineColonies</a>
+    <a class="sb-link" onclick="scrollTo('create')">Create</a>
+    <a class="sb-link" onclick="scrollTo('comida')">Comida + Farming</a>
+    <a class="sb-link" onclick="scrollTo('aventura')">Aventura + Dungeons</a>
+    <a class="sb-link" onclick="scrollTo('construcao')">Construção</a>
+    <a class="sb-link" onclick="scrollTo('transporte')">Transporte</a>
+    <a class="sb-link" onclick="scrollTo('qol')">QoL + Interface</a>
+  </div>
+  <div class="sb-section">
+    <div class="sb-label">Referência</div>
+    <a class="sb-link" onclick="scrollTo('materiais')">Materiais Tinkers</a>
+    <a class="sb-link" onclick="scrollTo('origens')">Origins</a>
+    <a class="sb-link" onclick="scrollTo('seed')">Seeds + Mapas</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div style="position:relative;z-index:1;width:100%">
+    <div class="hero-pack">Life in the Village 4 · Minecraft 1.20.1 · Forge</div>
+    <h1 class="hero-title">Samuel <span>+</span> Caleb<br>Hardcore Duo</h1>
+    <p class="hero-sub">Wiki pessoal do pack. 323 mods, vilas vivas, Tinkers como core, e uma ilha pra cada um.</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-n">323</div><div class="hstat-l">Mods</div></div>
+      <div class="hstat"><div class="hstat-n">1.20.1</div><div class="hstat-l">Versão</div></div>
+      <div class="hstat"><div class="hstat-n">Duo</div><div class="hstat-l">Modo</div></div>
+      <div class="hstat"><div class="hstat-n">HC</div><div class="hstat-l">Hardcore</div></div>
+    </div>
+    <div class="hero-seed" onclick="copySeed()" title="Clique para copiar">
+      🌍 Seed: 3257840388504953787 — Dual Survival Islands · Clique para copiar
+    </div>
+  </div>
+</section>
+
+<!-- COMO COMEÇAR -->
+<section id="start" class="section">
+  <div class="sec-label">Início</div>
+  <h2 class="sec-title">Como Começar</h2>
+  <p class="sec-sub">Três passos para ter o servidor rodando com Samuel (original) e Caleb (pirata) juntos.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">01</div>
+      <div class="step-t">Pack + Mods Extras</div>
+      <div class="step-d">No CurseForge instale <strong>Life in the Village 4</strong>. Adicione na pasta mods: Tinkers Integrations, Twilight Forest, Guard Villagers.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">02</div>
+      <div class="step-t">Servidor Local</div>
+      <div class="step-d">Baixe o Server Pack do CurseForge. Em <span class="mono">server.properties</span> configure <span class="mono">online-mode=false</span> e <span class="mono">enforce-secure-profile=false</span>.</div>
+    </div>
+    <div class="step">
+      <div class="step-n">03</div>
+      <div class="step-t">Caleb Conecta</div>
+      <div class="step-d">Caleb usa <strong>SKlauncher</strong> com Forge 1.20.1 e os mesmos mods. Conecta pelo IP local do Samuel (<span class="mono">192.168.x.x:25565</span>).</div>
+    </div>
+  </div>
+  <div class="callout">
+    <div class="callout-t">Primeiro dia de jogo</div>
+    <p>Ao criar o mundo, uma tela de <strong>Origins</strong> vai aparecer — escolha suas origens antes de fechar. Depois que fechar não dá mais. Os livros do Tinkers (<em>Materials and You</em>) vão estar no inventário logo de início — leia.</p>
+  </div>
+</section>
+
+<!-- PROGRESSÃO -->
+<section id="progressao" class="section">
+  <div class="sec-label">Roadmap</div>
+  <h2 class="sec-title">Progressão no Hardcore</h2>
+  <p class="sec-sub">O que fazer em cada fase. Clique em uma fase para expandir.</p>
+  <div class="tl" id="timeline">
+    <div class="tl-phase active" onclick="setPhase(0)">
+      <div class="tl-n">Fase 1</div>
+      <div class="tl-t">Sobrevivência</div>
+      <div class="tl-mods">
+        <div class="tl-mod">Origins (escolha)</div>
+        <div class="tl-mod">Tinkers Part Builder</div>
+        <div class="tl-mod">Jade + JEI</div>
+        <div class="tl-mod">Minimap</div>
+      </div>
+    </div>
+    <div class="tl-phase" onclick="setPhase(1)">
+      <div class="tl-n">Fase 2</div>
+      <div class="tl-t">Base + Vila</div>
+      <div class="tl-mods">
+        <div class="tl-mod">Tinkers Smeltery</div>
+        <div class="tl-mod">Farmer's Delight</div>
+        <div class="tl-mod">MineColonies Town Hall</div>
+        <div class="tl-mod">Guard Villagers</div>
+      </div>
+    </div>
+    <div class="tl-phase" onclick="setPhase(2)">
+      <div class="tl-n">Fase 3</div>
+      <div class="tl-t">Expansão</div>
+      <div class="tl-mods">
+        <div class="tl-mod">Create (básico)</div>
+        <div class="tl-mod">Waystones</div>
+        <div class="tl-mod">Sophisticated Backpacks</div>
+        <div class="tl-mod">PassiveSkillTree</div>
+      </div>
+    </div>
+    <div class="tl-phase" onclick="setPhase(3)">
+      <div class="tl-n">Fase 4</div>
+      <div class="tl-t">Nether</div>
+      <div class="tl-mods">
+        <div class="tl-mod">Amplified Nether</div>
+        <div class="tl-mod">Ardite + Cobalt</div>
+        <div class="tl-mod">YUNG's Fortresses</div>
+        <div class="tl-mod">Nether's Delight</div>
+      </div>
+    </div>
+    <div class="tl-phase" onclick="setPhase(4)">
+      <div class="tl-n">Fase 5</div>
+      <div class="tl-t">Twilight + Bosses</div>
+      <div class="tl-mods">
+        <div class="tl-mod">Twilight Forest</div>
+        <div class="tl-mod">Fiery Metal</div>
+        <div class="tl-mod">Alex's Mobs drops</div>
+        <div class="tl-mod">Dungeons Enhanced</div>
+      </div>
+    </div>
+    <div class="tl-phase" onclick="setPhase(5)">
+      <div class="tl-n">Fase 6</div>
+      <div class="tl-t">End Game</div>
+      <div class="tl-mods">
+        <div class="tl-mod">Manyullyn</div>
+        <div class="tl-mod">Create Railways</div>
+        <div class="tl-mod">MineColonies avançado</div>
+        <div class="tl-mod">Nullscape End</div>
+      </div>
+    </div>
+  </div>
+  <div id="phase-detail" style="margin-top:16px"></div>
+</section>
+
+<!-- MOD ENCYCLOPEDIA -->
+<section id="mods" class="section">
+  <div class="sec-label">Enciclopédia</div>
+  <h2 class="sec-title">Todos os Mods</h2>
+  <p class="sec-sub">Clique em qualquer card para ver detalhes completos. Busca em tempo real.</p>
+  <div class="filter-bar" id="filter-bar"></div>
+  <div id="search-results" class="grid g3"></div>
+  <div id="no-results">Nenhum mod encontrado para "<span id="nr-term"></span>"</div>
+</section>
+
+<!-- TINKERS -->
+<section id="tinkers" class="section">
+  <div class="sec-label">Core Mod</div>
+  <h2 class="sec-title">Tinkers' Construct</h2>
+  <p class="sec-sub">O eixo central do setup. Ferramentas customizadas com materiais de todo o mundo.</p>
+
+  <div class="grid g3" style="margin-bottom:32px">
+    <div class="card star">
+      <div class="card-cat">Passo 1 — Early</div>
+      <div class="card-name">Part Builder + Tool Station</div>
+      <div class="card-short">Craft partes separadas e monte ferramentas manualmente. Primeiro use flint (rápido) ou madeira.</div>
+    </div>
+    <div class="card star">
+      <div class="card-cat">Passo 2 — Early/Mid</div>
+      <div class="card-name">Smeltery de Bronze</div>
+      <div class="card-short">Mistura metais em proporções. Cobre + Estanho = Bronze. Muito mais durável que ferro vanilla.</div>
+    </div>
+    <div class="card star">
+      <div class="card-cat">Passo 3 — Nether</div>
+      <div class="card-name">Ardite + Cobalt</div>
+      <div class="card-short">Só existem no Nether. Misturados viram Manyullyn — o material mais poderoso do jogo.</div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;margin-bottom:16px">Tabela de Materiais</h3>
+  <div id="materiais">
+  <table class="mat-table">
+    <thead>
+      <tr>
+        <th>Material</th><th>Fase</th><th>Origem</th><th>Melhor pra</th><th>Destaque</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Flint</strong></td><td><span class="phase-pill ph-early">Early</span></td><td>Overworld</td><td>Cabeça de picareta</td><td>Alta velocidade de mineração</td></tr>
+      <tr><td><strong>Madeira</strong></td><td><span class="phase-pill ph-early">Early</span></td><td>Overworld</td><td>Cabos</td><td>Reparo com tábuas</td></tr>
+      <tr><td><strong>Pedra</strong></td><td><span class="phase-pill ph-early">Early</span></td><td>Overworld</td><td>Fundição básica</td><td>Smeltery provisória</td></tr>
+      <tr><td><strong>Cobre</strong></td><td><span class="phase-pill ph-early">Early</span></td><td>Overworld</td><td>Tudo</td><td>Base para Bronze</td></tr>
+      <tr><td><strong>Bronze</strong></td><td><span class="phase-pill ph-early">Early/Mid</span></td><td>Smeltery</td><td>Ferramentas completas</td><td>Cobre + Estanho — durável e acessível</td></tr>
+      <tr><td><strong>Ferro</strong></td><td><span class="phase-pill ph-mid">Mid</span></td><td>Overworld</td><td>Espadas, armaduras</td><td>Sólido e versátil</td></tr>
+      <tr><td><strong>Slimewood</strong></td><td><span class="phase-pill ph-mid">Mid</span></td><td>Slimes</td><td>Cabos elásticos</td><td>Durabilidade alta</td></tr>
+      <tr><td><strong>Ardite</strong></td><td><span class="phase-pill ph-nether">Nether</span></td><td>Nether (upper)</td><td>Cabeças de ferramenta</td><td>Velocidade máxima</td></tr>
+      <tr><td><strong>Cobalt</strong></td><td><span class="phase-pill ph-nether">Nether</span></td><td>Nether (lower)</td><td>Cabeças de ferramenta</td><td>Mineração mais rápida do jogo</td></tr>
+      <tr><td><strong>Manyullyn</strong></td><td><span class="phase-pill ph-nether">Nether+</span></td><td>Ardite + Cobalt</td><td>Tudo</td><td><span class="stars">★★★★★</span> Melhor do jogo</td></tr>
+      <tr><td><strong>Fiery Metal</strong></td><td><span class="phase-pill ph-end">End Game</span></td><td>Twilight Forest</td><td>Armadura + Cabeça</td><td>Drop de boss — sets fogo nos inimigos</td></tr>
+      <tr><td><strong>Knightslime</strong></td><td><span class="phase-pill ph-end">End Game</span></td><td>Twilight Forest</td><td>Armadura</td><td>Drop dos Knight bosses</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout" style="margin-top:24px">
+    <div class="callout-t">Tinkers Integrations + Tweaks</div>
+    <p>Mod-ponte instalado junto. Conecta Tinkers com: <strong>Create</strong> (fundição automatizada), <strong>Alex's Mobs</strong> (drops exclusivos), <strong>Twilight Forest</strong> (materiais de boss), <strong>Aquaculture</strong> (varas de pescar), <strong>Ice and Fire</strong> (escamas de dragão).</p>
+  </div>
+</section>
+
+<!-- VILAS -->
+<section id="vilas" class="section">
+  <div class="sec-label">Living Villages</div>
+  <h2 class="sec-title">Vilas + MineColonies</h2>
+  <p class="sec-sub">O pack transforma vilas em ecossistemas vivos. Há várias camadas.</p>
+  <div class="grid g2" style="margin-bottom:24px">
+    <div class="card star">
+      <div class="card-cat">Core — Colônia</div>
+      <div class="card-name">MineColonies</div>
+      <div class="card-short">Coloque a Town Hall e recrute colonos. Cada NPC tem profissão: minerador, fazendeiro, lenhador, guarda, cozinheiro. Eles trabalham sozinhos.</div>
+      <div class="card-tags"><span class="tag green">core</span><span class="tag gold">construção</span></div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Segurança</div>
+      <div class="card-name">Guard Villagers</div>
+      <div class="card-short">Guardas armados spawnam em vilas vanilla. Durante raids entram no combate. Alguns evoluem para elite com armadura.</div>
+      <div class="card-tags"><span class="tag blue">combate</span></div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Estruturas</div>
+      <div class="card-name">CTOV — Towns and Towers</div>
+      <div class="card-short">Vilas com arquitetura temática por bioma. Torres de vigia, postos avançados, acampamentos de pillagers gerados no mundo.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Redesign</div>
+      <div class="card-name">Integrated Villages</div>
+      <div class="card-short">Reconstrói casas de vilas vanilla com muito mais detalhe e coerência arquitetônica. Vilas que parecem habitadas.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Profissões</div>
+      <div class="card-name">More Villagers</div>
+      <div class="card-short">Novas profissões: Fisherman, Dungeon Trader, Fletcher especializado, entre outros. Amplifica o sistema de comércio.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Produção</div>
+      <div class="card-name">Productive Villagers</div>
+      <div class="card-short">Aldeões produzem recursos automaticamente se você construir as estruturas certas. Passivo valioso no mid game.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Subterrâneo</div>
+      <div class="card-name">Underground Village</div>
+      <div class="card-short">Vilas geradas dentro de cavernas. Você pode encontrar uma vila inteira enquanto minera.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Costeira</div>
+      <div class="card-name">Tidal Towns</div>
+      <div class="card-short">Estruturas costeiras — docas, faróis, casas sobre a água. Vistas incríveis em coastlines.</div>
+    </div>
+  </div>
+  <div class="callout">
+    <div class="callout-t">Sequência MineColonies recomendada</div>
+    <p>Town Hall → Builder's Hut → Miner → Lumberjack → Farm → Guard Tower. Nessa ordem você sai dependendo de recursos naturais e começa a ter uma economia interna.</p>
+  </div>
+</section>
+
+<!-- CREATE -->
+<section id="create" class="section">
+  <div class="sec-label">Automação</div>
+  <h2 class="sec-title">Ecossistema Create</h2>
+  <p class="sec-sub">14 mods do universo Create. Do básico ao sistema de trens.</p>
+  <div class="grid g2">
+    <div class="card star">
+      <div class="card-cat">Base</div>
+      <div class="card-name">Create</div>
+      <div class="card-short">Engrenagens, correias, prensas, misturadores, e moinhos. Tudo movido por energia rotacional — sem Redstone complexo.</div>
+      <div class="card-tags"><span class="tag green">essencial</span></div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Comida</div>
+      <div class="card-name">Create: Central Kitchen</div>
+      <div class="card-short">Automatiza receitas do Farmer's Delight com máquinas do Create. Restaurante automático no base.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Encantamentos</div>
+      <div class="card-name">Create: Enchantment Industry</div>
+      <div class="card-short">Transforma XP em líquido e automatiza encantamentos. Biblioteca automática de libros encantados.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Bebidas</div>
+      <div class="card-name">Create: Winery</div>
+      <div class="card-short">Produção automatizada de vinhos e cervejas. Combinado com Brewin and Chewin.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Energia</div>
+      <div class="card-name">Create Diesel Generators</div>
+      <div class="card-short">Geradores que convertem combustível em energia rotacional. Pra máquinas maiores que não dão pra mover na mão.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Mineração</div>
+      <div class="card-name">Create: Ore Excavation</div>
+      <div class="card-short">Máquinas de mineração em área configurável. Você define o padrão de escavação e a máquina executa.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Voo</div>
+      <div class="card-name">Create Jetpack</div>
+      <div class="card-short">Jetpack movido a energia do Create. Enche num compressor rotacional. Alternativa early para Elytra.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Transporte</div>
+      <div class="card-name">Create Railways Navigator</div>
+      <div class="card-short">Sistema de trens com estações programáveis. Automatize transporte de recursos entre bases.</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMIDA -->
+<section id="comida" class="section">
+  <div class="sec-label">Farming</div>
+  <h2 class="sec-title">Comida + Farming</h2>
+  <p class="sec-sub">O sistema de comida é completamente diferente do vanilla. 12 addons do Farmer's Delight.</p>
+  <div class="grid g3">
+    <div class="card star">
+      <div class="card-cat">Core</div>
+      <div class="card-name">Farmer's Delight</div>
+      <div class="card-short">Frigideira e panela para cozinhar refeições completas. Pratos dão buffs — regeneração, resistência. No hardcore isso salva vidas.</div>
+      <div class="card-tags"><span class="tag green">essencial</span></div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Variedade</div>
+      <div class="card-name">Croptopia</div>
+      <div class="card-short">+50 culturas e alimentos. Plantio, colheita, e pratos únicos de cada região do mapa.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Bebidas</div>
+      <div class="card-name">Brewin and Chewin</div>
+      <div class="card-short">Sistema de fermentação — cervejas, vinhos, suco. Buffs de bebida que complementam o food system.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Culinária</div>
+      <div class="card-name">Chef's Delight</div>
+      <div class="card-short">Receitas extras para Farmer's Delight. Pratos mais elaborados com buffs mais fortes.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Pesca</div>
+      <div class="card-name">Aquaculture Delight</div>
+      <div class="card-short">Receitas baseadas em peixes do Aquaculture 2. Sushi, grelhados, caldos.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Bioma</div>
+      <div class="card-name">Ocean's / Nether's / Miner's Delight</div>
+      <div class="card-short">Addons temáticos por bioma. Nether's Delight usa ingredientes do Nether. Miner's usa drops de caverna.</div>
+    </div>
+  </div>
+  <div class="callout">
+    <div class="callout-t">Top 3 pratos pra craftar cedo</div>
+    <p><strong>Stew</strong> (panela básica) — melhor custo-benefício early. <strong>Roast Chicken</strong> — regeneração por 30s. <strong>Vegetable Soup</strong> — satura por muito tempo. Esses três cobrem o food buff que você precisa nos primeiros dias.</p>
+  </div>
+</section>
+
+<!-- AVENTURA -->
+<section id="aventura" class="section">
+  <div class="sec-label">Exploração</div>
+  <h2 class="sec-title">Aventura + Dungeons</h2>
+  <p class="sec-sub">Cada estrutura vanilla foi completamente refeita. Mais dungeons, mais loot, mais perigo.</p>
+  <div class="grid g2">
+    <div class="card star">
+      <div class="card-cat">YUNG's Suite — 7 mods</div>
+      <div class="card-name">Better Dungeons / Strongholds / Monuments / Fortresses / End / Witch Huts / Extras</div>
+      <div class="card-short">Todas as estruturas vanilla completamente refeitas. Strongholds com 3x mais salas, Nether Fortresses com torres, Ocean Monuments com andares extras.</div>
+      <div class="card-tags"><span class="tag green">must explore</span></div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Dungeons</div>
+      <div class="card-name">Dungeons Enhanced</div>
+      <div class="card-short">Dungeons subterrâneas com múltiplos andares e loot progressivo. Muito mais difíceis que vanilla.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Raids</div>
+      <div class="card-name">Take a Pillage</div>
+      <div class="card-short">Outposts de pillager com mais variações. Novos tipos de inimigos: Vindicator Captain, Illusioner. Raids muito mais difíceis.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Arqueologia</div>
+      <div class="card-name">Better Archeology</div>
+      <div class="card-short">Sites arqueológicos novos com artefatos únicos. Escavação que vale a pena — loot real.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Itens Raros</div>
+      <div class="card-name">Artifacts</div>
+      <div class="card-short">Itens poderosos espalhados por dungeons. Botas de corrida, chapéu de visão noturna, anel de levitação. Cada um muda seu estilo de jogo.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Missões</div>
+      <div class="card-name">Bountiful</div>
+      <div class="card-short">Placa de recompensas nas vilas. Bounties diários: "mate 10 creepers", "entregue wheat". XP e loot especial.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONSTRUÇÃO -->
+<section id="construcao" class="section">
+  <div class="sec-label">Building</div>
+  <h2 class="sec-title">Construção</h2>
+  <p class="sec-sub">Para quem gosta de construir — centenas de novos blocos e variantes.</p>
+  <div class="grid g3">
+    <div class="card">
+      <div class="card-cat">Macaw's — 8 mods</div>
+      <div class="card-name">Bridges / Fences / Lights / Roofs / Windows / Paths / Paintings / Holidays</div>
+      <div class="card-short">Centenas de variações por categoria. Pontes em qualquer material, telhados curvos, janelas coloridas, lampiões decorativos.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Variantes</div>
+      <div class="card-name">Chipped</div>
+      <div class="card-short">Bancada especial que pega qualquer bloco vanilla e cria 8-12 variações visuais. 2000+ blocos novos sem texturas externas.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Texturas</div>
+      <div class="card-name">Copycats</div>
+      <div class="card-short">Blocos que copiam a textura de qualquer bloco. Escadas com textura de pedregulho, painéis de qualquer material.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Formas</div>
+      <div class="card-name">Builder's Addition</div>
+      <div class="card-short">Meios blocos, blocos inclinados, colunas, pilastras. Tudo que falta no vanilla para construção detalhada.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Histórico</div>
+      <div class="card-name">Dawn of Time Builder</div>
+      <div class="card-short">Blocos de civilizações antigas — egípcios, gregos, romanos, vikings. Para construir ruínas e templos.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Móveis</div>
+      <div class="card-name">Fantasy Furniture</div>
+      <div class="card-short">Móveis craftáveis em vários estilos. Mesas, cadeiras, prateleiras, camas decorativas, tochas de parede.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Detalhes</div>
+      <div class="card-name">Supplementaries</div>
+      <div class="card-short">Sinais pendurados, caixas de correio, calendários, ampulhetas, velas, corda. Pequenos detalhes que transformam um build.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Decoração</div>
+      <div class="card-name">Amendments</div>
+      <div class="card-short">Caldeirão mistura poções, lanterna animada, tapetes em escadas, velas em crânios. Vanilla+ bem feito.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">LittleJoys</div>
+      <div class="card-name">Bells and Whistles + DustyDecorations</div>
+      <div class="card-short">Detalhes decorativos: sinos, apitos, vasos empoeirados, decorações de parede vintage.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSPORTE -->
+<section id="transporte" class="section">
+  <div class="sec-label">Mobilidade</div>
+  <h2 class="sec-title">Transporte</h2>
+  <p class="sec-sub">Do salto em parede ao navio com canhão.</p>
+  <div class="grid g3">
+    <div class="card star">
+      <div class="card-cat">Teleporte</div>
+      <div class="card-name">Waystones</div>
+      <div class="card-short">Pedras de teletransporte nas vilas. Ative uma e teleporte entre todas as que você ativou. No hardcore duo, essencial para se reunir.</div>
+      <div class="card-tags"><span class="tag green">essencial</span></div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Ar</div>
+      <div class="card-name">Immersive Aircraft</div>
+      <div class="card-short">Aviões, dirigíveis e gyrocópteros funcionais. Você constrói e pilota de verdade. Não é decoração.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Terra</div>
+      <div class="card-name">Astekor Carts</div>
+      <div class="card-short">Carroças puxadas por cavalos com inventário. Transporta itens e NPCs pelo mapa.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Água</div>
+      <div class="card-name">Little Logistics</div>
+      <div class="card-short">Barcos que navegam sozinhos em canais transportando itens automaticamente. Logística passiva.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Navios</div>
+      <div class="card-name">Aleki's Nifty Ships</div>
+      <div class="card-short">Navios grandes jogáveis com canhões. Você entra, controla e dispara.</div>
+    </div>
+    <div class="card">
+      <div class="card-cat">Planar</div>
+      <div class="card-name">Gliders + Wall Jump</div>
+      <div class="card-short">Planadores craftáveis (alternativa early pra Elytra) e mecânica de Wall Jump em qualquer superfície.</div>
+    </div>
+  </div>
+</section>
+
+<!-- QOL -->
+<section id="qol" class="section">
+  <div class="sec-label">Interface</div>
+  <h2 class="sec-title">QoL + Interface</h2>
+  <p class="sec-sub">Mods silenciosos que mudam tudo na experiência diária.</p>
+  <div class="grid g4">
+    <div class="card"><div class="card-name">Jade</div><div class="card-short">Tooltip ao olhar pra qualquer bloco ou mob — nome, mod, HP, conteúdo.</div></div>
+    <div class="card"><div class="card-name">JEI</div><div class="card-short">R em qualquer item = receita. U = usos. Indispensável com 300+ mods.</div></div>
+    <div class="card"><div class="card-name">Xaero's Minimap</div><div class="card-short">Minimapa no canto. Waypoints. Norte marcado.</div></div>
+    <div class="card"><div class="card-name">Xaero's World Map</div><div class="card-short">M abre mapa completo explorado do mundo.</div></div>
+    <div class="card"><div class="card-name">Tool Belt</div><div class="card-short">Cinto no slot de cintura. Troca ferramentas com scroll do mouse.</div></div>
+    <div class="card"><div class="card-name">Nature's Compass</div><div class="card-short">Busca qualquer bioma no mapa com o compass.</div></div>
+    <div class="card"><div class="card-name">Explorer's Compass</div><div class="card-short">Busca qualquer estrutura (dungeon, vila, stronghold).</div></div>
+    <div class="card"><div class="card-name">AppleSkin</div><div class="card-short">Mostra exatamente quanto de fome o alimento repõe antes de comer.</div></div>
+    <div class="card"><div class="card-name">Ambient Sounds</div><div class="card-short">Som ambiente por bioma — floresta, caverna, oceano, chuva. Imersão total.</div></div>
+    <div class="card"><div class="card-name">Tombstone</div><div class="card-short">Seus itens ficam num túmulo ao morrer. Você volta e recupera tudo.</div></div>
+    <div class="card"><div class="card-name">Forgiving Void</div><div class="card-short">Cair no void teleporta de volta ao chão. No hardcore pode salvar.</div></div>
+    <div class="card"><div class="card-name">Origins</div><div class="card-short">Escolha uma raça no primeiro login — define habilidades únicas pra sempre.</div></div>
+    <div class="card"><div class="card-name">Passive Skill Tree</div><div class="card-short">Árvore de habilidades estilo PoE. Pontos de mobs mortos = stat upgrades.</div></div>
+    <div class="card"><div class="card-name">Mouse Tweaks</div><div class="card-short">Segura botão do mouse e arrasta pra mover stacks. Inventário muito mais rápido.</div></div>
+    <div class="card"><div class="card-name">Trash Slot</div><div class="card-short">Slot de lixo no inventário. Joga fora sem largar no chão.</div></div>
+    <div class="card"><div class="card-name">Legendary Tooltips</div><div class="card-short">Tooltips com bordas temáticas por raridade. Visual premium.</div></div>
+  </div>
+</section>
+
+<!-- ORIGINS -->
+<section id="origens" class="section">
+  <div class="sec-label">RPG</div>
+  <h2 class="sec-title">Origins — Escolha sua Raça</h2>
+  <p class="sec-sub">Aparece na primeira vez que você loga. Não dá pra mudar depois. Escolha com cuidado no hardcore.</p>
+  <div class="grid g3">
+    <div class="card"><div class="card-name">Human</div><div class="card-short">Sem bônus, sem penalidade. Ponto extra na skill tree. Para quem quer controle total.</div><div class="card-tags"><span class="tag">safe</span></div></div>
+    <div class="card"><div class="card-name">Merling</div><div class="card-short">Respira embaixo d'água, nada rápido. Mas sofre em terra seca — precisa de água regularmente.</div><div class="card-tags"><span class="tag blue">água</span></div></div>
+    <div class="card"><div class="card-name">Avian</div><div class="card-short">Cai devagar (sem dano de queda). Não pode comer carne. Leve e ágil.</div><div class="card-tags"><span class="tag">agilidade</span></div></div>
+    <div class="card"><div class="card-name">Blazeborn</div><div class="card-short">Imune a fogo e lava. Mas morre de dano de água — chuva e poções de água causam dano.</div><div class="card-tags"><span class="tag gold">nether</span></div></div>
+    <div class="card"><div class="card-name">Enderian</div><div class="card-short">Teleporta com clique direito. Sofre dano de água como Enderman. Exige atenção constante.</div><div class="card-tags"><span class="tag purple">teleporte</span></div></div>
+    <div class="card"><div class="card-name">Phantom</div><div class="card-short">Atravessa blocos (fase). Não pode usar armadura. Alto risco, alto reward.</div><div class="card-tags"><span class="tag">difícil</span></div></div>
+  </div>
+  <div class="callout">
+    <div class="callout-t">Recomendação para o Duo Hardcore</div>
+    <p>Um joga <strong>Human</strong> (tankeiro com skill tree), o outro <strong>Avian</strong> (mobilidade, sem dano de queda em cavernas). Isso cria uma dupla complementar sem desigualdade extrema.</p>
+  </div>
+</section>
+
+<!-- SEEDS -->
+<section id="seed" class="section">
+  <div class="sec-label">Mapa</div>
+  <h2 class="sec-title">Seed + Mundo</h2>
+  <p class="sec-sub">A seed recomendada para o duo — uma ilha pra cada um.</p>
+  <div class="card star" style="margin-bottom:24px">
+    <div class="card-cat">Seed Principal — Dual Survival Islands</div>
+    <div class="card-name" style="font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--cyan)">3257840388504953787</div>
+    <div class="card-short" style="margin-top:8px">Duas ilhas simétricas. Cada jogador começa numa ilha diferente com recursos espelhados. Para se reunir, precisam construir ponte ou barco — criando uma narrativa natural de jogo em duo.</div>
+  </div>
+  <div class="grid g3">
+    <div class="card">
+      <div class="card-name">Por que essa seed?</div>
+      <div class="card-short">Com Tinkers, cada material é escasso e precioso. Ilhas separadas forçam trocas estratégicas — "eu tenho estanho, você tem cobre, precisamos de bronze".</div>
+    </div>
+    <div class="card">
+      <div class="card-name">Configuração do mundo</div>
+      <div class="card-short">Mode: Hardcore. Seed: colocar no campo. Cheats: Off. Difficulty: Hard. Não mudar a geração — o Tectonic e TerraBlender já estão configurados.</div>
+    </div>
+    <div class="card">
+      <div class="card-name">Alternativa</div>
+      <div class="card-short">Seed <span class="mono">-4379469131957062683</span> — Spawn rico com múltiplos biomas próximos. Acesso rápido a materiais variados para Tinkers early.</div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- MODAL -->
+<div id="modal-overlay" onclick="closeModal()"></div>
+<div id="modal">
+  <div class="modal-inner" id="modal-content"></div>
+</div>
+
+<!-- TOAST -->
+<div id="toast">Seed copiada!</div>
+
+<script>
+// ===== DATA =====
+const CATS = [
+  {id:'all',label:'Todos'},
+  {id:'tinkers',label:'Tinkers'},
+  {id:'create',label:'Create'},
+  {id:'vilas',label:'Vilas'},
+  {id:'comida',label:'Comida'},
+  {id:'aventura',label:'Aventura'},
+  {id:'mundo',label:'Mundo'},
+  {id:'construcao',label:'Construção'},
+  {id:'transporte',label:'Transporte'},
+  {id:'armazenamento',label:'Armazenamento'},
+  {id:'origens',label:'Origins/RPG'},
+  {id:'qol',label:'QoL'},
+];
+
+const MODS = [
+  // TINKERS
+  {id:'tinkers',name:"Tinkers' Construct",cat:'tinkers',star:true,
+   short:'Ferramentas customizadas com materiais únicos. O core mod do setup.',
+   where:'Livro "Materials and You" aparece no spawn. Construa Part Builder → Tool Station → Smeltery.',
+   tips:['Flint é sua primeira cabeça de ferramenta — rápida e acessível','Bronze (cobre + estanho) é o upgrade early mais importante','Manyullyn (Ardite + Cobalt no Nether) é o end game material'],
+   tags:['core','essencial','progressão']},
+  {id:'tcintegrations',name:'Tinkers Integrations + Tweaks',cat:'tinkers',star:true,
+   short:'Ponte entre Tinkers e Create, Alex\'s Mobs, Twilight Forest, Aquaculture, e mais.',
+   where:'Transparente — você vai notar quando fundir materiais de outros mods na Smeltery.',
+   tips:['Drops do Alex\'s Mobs viram materiais únicos','Ice and Fire adiciona escamas de dragão','Twilight Forest adiciona Fiery Metal de bosses'],
+   tags:['integração','compatibilidade']},
+  // CREATE
+  {id:'create',name:'Create',cat:'create',star:true,
+   short:'Automação mecânica com engrenagens, correias, prensas e moinhos. Zero Redstone complexo.',
+   where:'Craft a Cogwheel e comece com um moinho de vento. JEI mostra todas as receitas.',
+   tips:['Stressometer mostra se sua rede tem energia suficiente','Comece com uma Mechanical Press para processar minérios 2x','Linking correias funciona em qualquer distância com Shaft'],
+   tags:['automação','essencial']},
+  {id:'create-kitchen',name:'Create: Central Kitchen',cat:'create',
+   short:'Automatiza receitas do Farmer\'s Delight com máquinas do Create.',
+   where:'Veja receitas no JEI filtrando por "Central Kitchen". Usa Mechanical Mixer e Basin.',
+   tips:['Produz comida em massa pra colônia inteira','Stew automático é o melhor custo-benefício'],
+   tags:['comida','automação']},
+  {id:'create-enchant',name:'Create: Enchantment Industry',cat:'create',
+   short:'Transforma XP em líquido e automatiza encantamentos.',
+   where:'Construa o Enchanting Apparatus conectado à sua rede Create.',
+   tips:['XP líquido pode ser bombeado e armazenado','Automatize produção de livros encantados específicos'],
+   tags:['encantamentos']},
+  {id:'create-railways',name:'Create Railways Navigator',cat:'create',
+   short:'Sistema de trens com estações programáveis e paradas automáticas.',
+   where:'Craft Train Controls e Conductor. Programe rotas no Navigator.',
+   tips:['Perfeito para transportar recursos entre bases distantes','Sistema de metrô entre a base e a colônia'],
+   tags:['transporte','automação']},
+  // VILAS
+  {id:'minecolonies',name:'MineColonies',cat:'vilas',star:true,
+   short:'Colônia com NPCs trabalhadores. Cada colono tem profissão e trabalha sozinho.',
+   where:'Craft a Supply Camp e coloque no chão. Abra o Town Hall e comece a recrutar.',
+   tips:['Sequência: Town Hall → Builder → Miner → Lumberjack → Farm → Guard','Cada colono precisa de moradia e comida','Colonos sobem de nível e ficam mais eficientes'],
+   tags:['vilas','construção','gestão']},
+  {id:'guardvillagers',name:'Guard Villagers',cat:'vilas',
+   short:'Guardas armados spawnam em vilas vanilla e combatem durante raids.',
+   where:'Visite qualquer vila vanilla — os guardas já estão lá. Elite guards têm armadura completa.',
+   tips:['Não ataque guardas — eles retaliam','Guardar itens valiosos perto de guardas é estratégico'],
+   tags:['vilas','combate']},
+  {id:'ctov',name:'CTOV — Towns and Towers',cat:'vilas',
+   short:'Vilas com arquitetura temática por bioma, torres de vigia e postos avançados.',
+   where:'Explore o mundo — cada bioma tem uma variante de vila diferente.',
+   tips:['Postos avançados têm loot especial','Torres de vigia marcam pontos estratégicos no mapa'],
+   tags:['vilas','estruturas','worldgen']},
+  {id:'integrated-villages',name:'Integrated Villages',cat:'vilas',
+   short:'Reconstrói casas de vilas vanilla com muito mais detalhe e coerência arquitetônica.',
+   where:'Qualquer vila vanilla gerada com o mod ativo vai ter as novas estruturas.',
+   tips:['Vilas parecem habitadas de verdade','Estruturas novas incluem mercado e armazém'],
+   tags:['vilas']},
+  {id:'more-villagers',name:'More Villagers',cat:'vilas',
+   short:'Novas profissões: Fisherman, Dungeon Trader, Fletcher especializado.',
+   where:'Encontre as novas bancadas de trabalho nas vilas.',
+   tips:['Dungeon Trader vende mapas para dungeons','Fisherman vende varas e iscas raras'],
+   tags:['vilas','comércio']},
+  {id:'underground-village',name:'Underground Village',cat:'vilas',
+   short:'Vilas geradas dentro de cavernas — encontre enquanto minera.',
+   where:'Explore cavernas profundas — vilas iluminadas com tochas aparecem.',
+   tips:['Têm waystones próprios','Comerciantes subterrâneos com itens de caverna'],
+   tags:['vilas','worldgen']},
+  // COMIDA
+  {id:'farmersdelight',name:"Farmer's Delight",cat:'comida',star:true,
+   short:'Frigideira e panela para refeições completas. Pratos dão buffs reais.',
+   where:'Craft uma Skillet (frigideira) ou uma Cooking Pot. JEI mostra todas as receitas.',
+   tips:['Stew é o melhor prato early — regeneração + saciedade','Roast Chicken dá Regeneration por 30s','Cozinhe em batch na Cooking Pot — 4x mais eficiente'],
+   tags:['comida','essencial']},
+  {id:'croptopia',name:'Croptopia',cat:'comida',
+   short:'+50 culturas e alimentos. Plantio, colheita e pratos únicos.',
+   where:'Sementes novas em chest de dungeons e vilas. Plante e explore o JEI para receitas.',
+   tips:['Algumas plantas crescem em biomas específicos','Combine com Farmer\'s Delight para receitas mais complexas'],
+   tags:['comida','farming']},
+  {id:'aquaculture',name:'Aquaculture 2',cat:'comida',
+   short:'Sistema de pesca expandido — varas Tinkers, peixes únicos, e iscas especiais.',
+   where:'Craft uma vara de pescar Tinkers via Tool Station. Pesque em qualquer bioma aquático.',
+   tips:['Diferentes peixes por bioma','Varas Tinkers têm durabilidade e modificadores'],
+   tags:['pesca','tinkers']},
+  // AVENTURA
+  {id:'yungs',name:"YUNG's Complete Suite",cat:'aventura',star:true,
+   short:'7 mods que reescrevem todas as estruturas vanilla — dungeons, strongholds, monumentos, fortalezas.',
+   where:'Explore qualquer estrutura vanilla — todas foram redesenhadas.',
+   tips:['Strongholds têm 3x mais salas e armadilhas reais','Nether Fortresses têm torres e pontes novas','Ocean Monuments têm andares extras com loot progressivo'],
+   tags:['exploração','dungeons','estruturas']},
+  {id:'dungeons-enhanced',name:'Dungeons Enhanced',cat:'aventura',
+   short:'Dungeons subterrâneas com múltiplos andares e loot progressivo.',
+   where:'Mine profundo — dungeons aparecem com múltiplos níveis.',
+   tips:['Cada andar é mais difícil','Boss no último andar com loot raro'],
+   tags:['dungeons','exploração']},
+  {id:'takepillage',name:'Take a Pillage',cat:'aventura',
+   short:'Raids muito mais difíceis com novos tipos de inimigos pillager.',
+   where:'Provoque uma raid ou encontre um outpost avançado.',
+   tips:['Illusioner é o inimigo mais perigoso — cria ilusões','Outposts avançados têm loot especial no topo'],
+   tags:['raids','combate']},
+  {id:'artifacts',name:'Artifacts',cat:'aventura',star:true,
+   short:'Itens raros em dungeons com efeitos únicos que mudam seu estilo de jogo.',
+   where:'Abra baús em dungeons — itens têm tooltip dourado indicando que são Artifacts.',
+   tips:['Umbrella: protege da chuva e reduz dano de queda','Mitten: mais dano de soco mas você não consegue segurar itens','Whoopee Cushion: ativa velocidade ao pular (speedrun)'],
+   tags:['itens','exploração','rare']},
+  {id:'bountiful',name:'Bountiful',cat:'aventura',
+   short:'Placa de recompensas nas vilas com missões diárias.',
+   where:'Encontre o Bounty Board nas vilas — placa de madeira com pergaminho.',
+   tips:['Bounties resetam diariamente','XP e moeda como recompensa — compra com merchants especiais'],
+   tags:['missões','vilas']},
+  // MUNDO
+  {id:'tectonic',name:'Tectonic',cat:'mundo',
+   short:'Overhaul completo de terrain — montanhas mais altas, vales mais profundos.',
+   where:'Visível desde o spawn — o terrain é dramaticamente diferente do vanilla.',
+   tips:['Cavernas são muito maiores','Algumas montanhas chegam ao build limit'],
+   tags:['worldgen','terrain']},
+  {id:'nullscape',name:'Nullscape',cat:'mundo',
+   short:'End completamente diferente — biomas novos e estruturas únicas.',
+   where:'Entre no End — não é mais aquele vazio plano.',
+   tips:['Explore antes de atacar o Dragon','Materiais únicos espalhados pelas novas ilhas'],
+   tags:['worldgen','end']},
+  {id:'amplified-nether',name:'Amplified Nether',cat:'mundo',
+   short:'Nether com 256 blocos de altura, cavernas verticais gigantescas e biomas empilhados.',
+   where:'Entre no Nether — imediatamente perceptível.',
+   tips:['Ardite e Cobalt ficam em alturas diferentes','Navegação mais difícil — use Xaero\'s World Map'],
+   tags:['worldgen','nether']},
+  {id:'regions-unexplored',name:'Regions Unexplored',cat:'mundo',
+   short:'26+ biomas novos: florestas de bétula rosa, savanas vulcânicas, pântanos profundos.',
+   where:'Explore longe do spawn — novos biomas aparecem misturados com os vanilla.',
+   tips:['Alguns biomas têm mobs exclusivos','Recursos únicos por bioma novo'],
+   tags:['worldgen','biomas']},
+  {id:'bumblezone',name:'The Bumblezone',cat:'mundo',
+   short:'Dimensão das abelhas — um mundo de colmeia com abelhas gigantes e mel.',
+   where:'Craft o portal via Bee Hive. Dimensão extra com loot exclusivo.',
+   tips:['Mel do Bumblezone é 3x mais poderoso','Abelhas gigantes dropam materiais únicos'],
+   tags:['dimensão','worldgen']},
+  // CONSTRUÇÃO
+  {id:'macaws',name:"Macaw's Suite (8 mods)",cat:'construcao',
+   short:'Centenas de variações de bridges, fences, lights, roofs, windows, paths, paintings.',
+   where:'JEI → buscar "Macaw" para ver todas as receitas por categoria.',
+   tips:['Cada elemento existe em todo tipo de madeira e pedra','Combine estilos diferentes por bioma'],
+   tags:['construção','blocos']},
+  {id:'chipped',name:'Chipped',cat:'construcao',
+   short:'Bancada que gera 8-12 variações visuais de qualquer bloco vanilla.',
+   where:'Craft o Tinkering Table. Coloque qualquer bloco e selecione a variação.',
+   tips:['2000+ blocos novos disponíveis','Zero texturas externas — usa os do jogo'],
+   tags:['construção','blocos']},
+  {id:'builders-addition',name:"Builder's Addition",cat:'construcao',
+   short:'Meios blocos, blocos inclinados, colunas e pilastras para construção detalhada.',
+   where:'JEI → buscar "Builder\'s Addition" — mesma categoria que blocos de pedra.',
+   tips:['Slopes criam telhados realistas','Pillars para colunas de templo'],
+   tags:['construção','blocos']},
+  // TRANSPORTE
+  {id:'waystones',name:'Waystones',cat:'transporte',star:true,
+   short:'Pedras de teletransporte nas vilas. Ative e teleporte gratuitamente.',
+   where:'Aparecem automaticamente em vilas. Clique com a mão vazia para ativar.',
+   tips:['Você pode craftar waystones adicionais para a base','Custo de XP para teleporte de longa distância (configurável)'],
+   tags:['transporte','essencial']},
+  {id:'immersive-aircraft',name:'Immersive Aircraft',cat:'transporte',
+   short:'Aviões, dirigíveis e gyrocópteros funcionais que você constrói e pilota.',
+   where:'Craft no workbench com materiais de mid-game. JEI mostra as receitas completas.',
+   tips:['Gyrocóptero é mais fácil de controlar','Dirigível tem inventário para transportar recursos'],
+   tags:['transporte','voo']},
+  {id:'gliders',name:'Gliders + Wall Jump',cat:'transporte',
+   short:'Planadores craftáveis e mecânica de Wall Jump em qualquer superfície.',
+   where:'Glider: craft e equipe no slot de capa. Wall Jump: funciona automaticamente.',
+   tips:['Glider substitui Elytra antes do End','Wall Jump transforma mobilidade em cavernas'],
+   tags:['transporte','mobilidade']},
+  // ARMAZENAMENTO
+  {id:'sophisticated-backpacks',name:'Sophisticated Backpacks',cat:'armazenamento',star:true,
+   short:'Mochilas equipáveis com slots extras, filtros e upgrades.',
+   where:'Craft no workbench. Equipe no slot de capa (ou hold nas costas com Caelus).',
+   tips:['Upgrade de auto-pick só pega o que você configurar','Nested backpacks: mochila dentro de mochila','Pipe upgrade conecta ao Create'],
+   tags:['armazenamento','essencial']},
+  {id:'sophisticated-storage',name:'Sophisticated Storage',cat:'armazenamento',
+   short:'Baús avançados com filtros automáticos, upgrades e rede de armazenamento.',
+   where:'Craft um Basic Storage e conecte com pipes.',
+   tips:['Sort upgrade organiza automaticamente','Stack upgrade duplica capacidade','Controller conecta toda a rede'],
+   tags:['armazenamento']},
+  {id:'functional-storage',name:'Functional Storage',cat:'armazenamento',
+   short:'Gavetas estilo Refined Storage — visual limpo, capacidade alta.',
+   where:'Craft o Drawer e coloque na parede.',
+   tips:['Compacting Drawer converte automaticamente entre tamanhos','Upgrade de capacidade até 32 stacks por gaveta'],
+   tags:['armazenamento']},
+  // ORIGENS/RPG
+  {id:'origins',name:'Origins',cat:'origens',star:true,
+   short:'Escolha uma raça na primeira vez. Define habilidades únicas para sempre.',
+   where:'Tela abre automaticamente no primeiro login. Não fecha sem escolher.',
+   tips:['Human: bônus neutro + ponto extra na skill tree','Merling: aquático, ótimo se a seed tiver oceanos','Blazeborn: Nether expert, sofre com água'],
+   tags:['RPG','essencial','permanente']},
+  {id:'passive-skill-tree',name:'Passive Skill Tree',cat:'origens',
+   short:'Árvore de habilidades estilo Path of Exile. Pontos de XP → upgrades permanentes.',
+   where:'Abra com a tecla configurada (padrão: K). Distribuia pontos ganhos de XP.',
+   tips:['Foco inicial: mais HP (sobrevivência no hardcore)','Depois: velocidade de mineração ou dano','Você e Caleb podem ter builds diferentes — complementares'],
+   tags:['RPG','progressão']},
+  // QOL
+  {id:'jade',name:'Jade',cat:'qol',star:true,
+   short:'Tooltip ao olhar para qualquer bloco ou mob — nome, mod de origem, HP, conteúdo.',
+   where:'Automático. Olhe para qualquer coisa e o tooltip aparece no canto da tela.',
+   tips:['Mostra HP de mobs antes de atacar','Mostra o que está dentro de baús sem abrir'],
+   tags:['qol','interface']},
+  {id:'jei',name:'JEI — Just Enough Items',cat:'qol',star:true,
+   short:'R em qualquer item = receita. U = usos. Indispensável com 300+ mods.',
+   where:'Automático. Pressione R com o cursor sobre qualquer item no inventário.',
+   tips:['Pesquise por nome no campo de busca à direita','Filtre por mod usando "@nomeMod"','Favorite receitas com Ctrl+Click'],
+   tags:['qol','interface','essencial']},
+  {id:'xaeros',name:"Xaero's Minimap + World Map",cat:'qol',star:true,
+   short:'Minimapa no canto + M para mapa completo. Waypoints salvos.',
+   where:'Automático. M para world map. Ctrl+B para criar waypoint.',
+   tips:['No hardcore: marque onde você morreu antes de ir recuperar','Configure para mostrar mobs no minimap','World map mostra estruturas não exploradas'],
+   tags:['qol','navegação']},
+  {id:'ambient-sounds',name:'Ambient Sounds 6',cat:'qol',
+   short:'Som ambiente por bioma. Floresta, caverna, oceano, chuva — cada lugar tem sua atmosfera.',
+   where:'Automático. Funciona em background baseado no bioma e situação.',
+   tips:['Cavernas têm sons distintos por profundidade','Sons de perigo aumentam quando mobs estão perto'],
+   tags:['qol','imersão']},
+  {id:'tombstone',name:'Tombstone',cat:'qol',
+   short:'Seus itens ficam num túmulo ao morrer. Volte e recupere tudo.',
+   where:'Ao morrer, uma cruz aparece exatamente onde você estava.',
+   tips:['No hardcore: useless pra vida, mas útil em sessões normais de teste','Waypoint automático marca onde seu túmulo está'],
+   tags:['qol','sobrevivência']},
+
+  // QOL EXTRAS
+  {id:'nature-compass',name:"Nature's Compass",cat:'qol',
+   short:'Aponta para o bioma mais próximo que você procurar.',
+   where:'Craft o compass, clique com botão direito e selecione o bioma. Uma seta aponta a direção.',
+   tips:['Essencial pra achar Mushroom Island, Cherry Blossom, ou biomas raros','Funciona no Nether também'],
+   tags:['qol','navegação']},
+  {id:'explorer-compass',name:"Explorer's Compass",cat:'qol',
+   short:'Aponta para a estrutura mais próxima — dungeon, vila, stronghold, monumento.',
+   where:'Craft o compass e clique direito para selecionar o tipo de estrutura.',
+   tips:['Essencial pra achar Stronghold sem olho de ender','Funciona com estruturas de mods (YUNG\'s, CTOV)'],
+   tags:['qol','navegação']},
+  {id:'legendary-tooltips',name:'Legendary Tooltips',cat:'qol',
+   short:'Tooltips com bordas coloridas por raridade de item — visual premium.',
+   where:'Automático — todo item no inventário tem tooltip estilizado.',
+   tips:['Items raros (Artifacts) têm borda dourada animada','Configura cores por raridade via config'],
+   tags:['qol','interface']},
+  {id:'apron-skin',name:'AppleSkin',cat:'qol',
+   short:'Mostra exatamente quanto de fome e saturação o alimento vai repor antes de comer.',
+   where:'Automático — segure o alimento na mão e olhe para a barra de fome.',
+   tips:['Vital no hardcore pra não desperdiçar comida boa','Mostra saturação (que o vanilla esconde)'],
+   tags:['qol','comida']},
+  {id:'mouse-tweaks',name:'Mouse Tweaks',cat:'qol',
+   short:'Segure botão do mouse e arraste para mover stacks. Inventário muito mais rápido.',
+   where:'Automático — simplesmente arraste com o botão pressionado.',
+   tips:['Shift+arraste move itens pro baú automaticamente','Botão direito + arraste distribui uniformemente'],
+   tags:['qol','interface']},
+  {id:'tool-belt',name:'Tool Belt',cat:'qol',
+   short:'Cinto equipável com slots para ferramentas. Troca com scroll do mouse.',
+   where:'Craft o Tool Belt e equipe no slot de cinto (requer Curios).',
+   tips:['Configure quais teclas trocam para cada ferramenta','Economiza tempo em builds longas'],
+   tags:['qol','ferramentas']},
+  {id:'clumps',name:'Clumps',cat:'qol',
+   short:'Orbs de XP se agrupam em uma só. Sem lag ao matar muitos mobs.',
+   where:'Automático — transparente para o jogador.',
+   tips:['Especialmente útil perto de spawners','Reduz TPS lag no servidor'],
+   tags:['qol','performance']},
+  {id:'nophantoms',name:'No Phantoms',cat:'qol',
+   short:'Remove phantoms do jogo. Sem punição por não dormir.',
+   where:'Automático — phantoms simplesmente não spawnaram.',
+   tips:['No hardcore vocês podem ficar acordados sem medo','Noites mais tranquilas pra buildar'],
+   tags:['qol','sobrevivência']},
+  {id:'lootbeams',name:'Loot Beams',cat:'qol',
+   short:'Itens no chão emitem raios de luz coloridos por raridade.',
+   where:'Automático — qualquer item dropado brilha com um raio.',
+   tips:['Ouro = raro, branco = comum','Vê drops de boss de longe sem precisar chegar perto'],
+   tags:['qol','interface']},
+  {id:'damage-indicator',name:'Damage Indicator',cat:'qol',
+   short:'Números de dano flutuam sobre mobs ao acertar. Barra de HP visível.',
+   where:'Automático — aparecem ao dar dano em qualquer mob.',
+   tips:['Ajuda a saber quando parar de atacar e recuar','Compara dano de diferentes ferramentas Tinkers'],
+   tags:['qol','combate']},
+  {id:'enchant-desc',name:'Enchantment Descriptions',cat:'qol',
+   short:'Explica o que cada encantamento faz no tooltip — sem precisar abrir wiki.',
+   where:'Automático — hover sobre qualquer item encantado.',
+   tips:['Fundamental com tantos encantamentos de mods','Descrições em português (configurável)'],
+   tags:['qol','interface']},
+  {id:'torchmaster',name:'Torchmaster',cat:'qol',
+   short:'Mega-tocha que impede spawn de mobs em um raio configurable.',
+   where:'Craft a Mega Torch e coloque na base. Raio padrão de 64 blocos.',
+   tips:['Perfeito pra proteger a base e a colônia à noite','Versão Dread Lamp bloqueia spawn no Nether'],
+   tags:['qol','sobrevivência']},
+  {id:'second-chance',name:'Second Chance',cat:'qol',
+   short:'Um segundo de graça antes de morrer — dá tempo de usar totem ou recuar.',
+   where:'Automático — ativa quando você fica com 0 HP.',
+   tips:['No hardcore isso pode salvar uma run inteira','Funciona uma vez por morte — sem cooldown infinito'],
+   tags:['qol','sobrevivência']},
+  {id:'forgiving-void',name:'Forgiving Void',cat:'qol',
+   short:'Cair no void teleporta de volta ao chão com 1 HP em vez de morrer.',
+   where:'Automático — ativa ao cair abaixo do build limit.',
+   tips:['No hardcore: literalmente salva de morrer num bug','Configura se quer perder itens ou não'],
+   tags:['qol','sobrevivência']},
+  {id:'elytra-slot',name:'Elytra Slot',cat:'qol',
+   short:'Equipa Elytra em slot separado sem ocupar o slot de armadura do peito.',
+   where:'Requer Caelus API — slot de capa adicional no inventário.',
+   tips:['Com Elytra + Armadura de peito você voa E tem proteção completa','Compatível com Create Jetpack também'],
+   tags:['qol','mobilidade']},
+  {id:'comforts',name:'Comforts',cat:'qol',
+   short:'Sleeping bag portátil que pula a noite sem setar spawn.',
+   where:'Craft o Sleeping Bag e use no chão. Mais leve que uma cama.',
+   tips:['Útil em expedições longas — dorme sem trocar seu spawn point','Hammock pula para o amanhecer sem dormir'],
+   tags:['qol','exploração']},
+  {id:'shoulder-surfing',name:'Shoulder Surfing',cat:'qol',
+   short:'Câmera em terceira pessoa melhorada — câmera sobre o ombro estilo Resident Evil.',
+   where:'Toggle com tecla (padrão F5 modificado). Funciona em modo terceira pessoa.',
+   tips:['Mais fácil de mirar em terceira pessoa','Vê a armadura que você está usando'],
+   tags:['qol','câmera']},
+
+  // MOBS NOVOS
+  {id:'critters',name:'Critters and Companions',cat:'qol',
+   short:'Novos animais fofos domesticáveis: otters, red pandas, ferrets, seahorses.',
+   where:'Spawnam em biomas específicos. Seahorse em oceano, otter em rios.',
+   tips:['Red pandas carregam itens quando domesticados','Ferret ajuda na caça a mobs pequenos'],
+   tags:['mobs','fauna']},
+  {id:'goblin-traders',name:'Goblin Traders',cat:'aventura',
+   short:'Mercadores goblin aparecem no Overworld e Nether vendendo itens únicos.',
+   where:'Spawnam aleatoriamente. Anúncio no chat quando um aparece próximo.',
+   tips:['Nether Goblin vende materiais do Nether por ouro','Itens exclusivos que não existem em outras receitas'],
+   tags:['comércio','aventura']},
+  {id:'ribbits',name:'Ribbits',cat:'qol',
+   short:'Mais variações de sapos — cores diferentes por bioma. Lore expandido.',
+   where:'Spawnam nos mesmos biomas de sapos vanilla, com muito mais variedade visual.',
+   tips:['Drops únicos de cada variante','Alguns têm comportamentos diferentes'],
+   tags:['mobs','fauna']},
+  {id:'golem-friends',name:'Golems Are Friends',cat:'qol',
+   short:'Iron Golems não te atacam acidentalmente durante combate.',
+   where:'Automático — golens da vila e do MineColonies nunca são hostis ao jogador.',
+   tips:['Crítico pra MineColonies — os guard golens eram um risco antes','Agora você pode lutar perto de golens tranquilamente'],
+   tags:['qol','vilas']},
+  {id:'haunted-harvest',name:'Haunted Harvest',cat:'aventura',
+   short:'Conteúdo sazonal de Halloween — mobs, drops e decorações temáticas.',
+   where:'Ativo no mundo — lanterna de abóbora animada, bat melhorado, drops especiais.',
+   tips:['Drops de Halloween têm usos em encantamentos especiais','Scarecrow espanta mobs da sua farm'],
+   tags:['aventura','sazonal']},
+  {id:'spelunkery',name:'Spelunkery',cat:'aventura',
+   short:'Melhora cavernas com loot especial, fósseis únicos e iluminação atmosférica.',
+   where:'Explore cavernas profundas — novos elementos aparecem nas paredes e teto.',
+   tips:['Cristais nas paredes de cavernas são harvestáveis','Fósseis expandidos têm loot arqueológico'],
+   tags:['exploração','worldgen']},
+
+  // COMIDA EXTRAS
+  {id:'brewin',name:'Brewin and Chewin',cat:'comida',
+   short:'Sistema de fermentação — cervejas, vinhos e sucos com buffs únicos.',
+   where:'Craft o Barrel (barril) e insira ingredientes. JEI mostra todas as receitas.',
+   tips:['Beer dá Haste temporária — ótimo antes de mineração','Wine dá Luck — melhor loot em dungeons','Diferentes frutas = diferentes buffs'],
+   tags:['comida','bebidas']},
+  {id:'cooking-blockheads',name:'Cooking for Blockheads',cat:'comida',
+   short:'Cozinha modular — forno, pia, geladeira, balcão. JEI integrado na cozinha.',
+   where:'Craft os blocos de cozinha e arranje em L ou linha. Interface unificada.',
+   tips:['Fridge preserva comida indefinidamente','Toaster faz 4 torradas de uma vez','Exibe receitas possíveis com ingredientes que você TEM'],
+   tags:['comida','construção']},
+  {id:'miners-delight',name:"Miner's Delight",cat:'comida',
+   short:'Receitas FD com ingredientes de caverna — cogumelos, pedras especiais, morcegos.',
+   where:'JEI → buscar "Miner\'s Delight" para ver receitas.',
+   tips:['Mushroom Stew aprimorado com Night Vision','Receitas de Nether material com buffs de resistência'],
+   tags:['comida','caverna']},
+  {id:'slice-dice',name:'Slice and Dice',cat:'create',
+   short:'Integra Farmer\'s Delight com Create — processa receitas de culinária com máquinas.',
+   where:'O Mechanical Mixer e Mechanical Saw passam a aceitar receitas do Farmer\'s Delight.',
+   tips:['Automatize produção de Stew em escala','Combine com Create Central Kitchen pra cozinha totalmente automática'],
+   tags:['create','comida','automação']},
+
+  // ARMAZENAMENTO EXTRA
+  {id:'toms-storage',name:"Tom's Simple Storage",cat:'armazenamento',
+   short:'Rede de armazenamento simples — um terminal acessa todos os baús conectados.',
+   where:'Craft o Storage Terminal e conecte por pipes simples.',
+   tips:['Mais simples que Applied Energistics — zero complexidade','Terminal de craft busca itens da rede automaticamente'],
+   tags:['armazenamento']},
+  {id:'iron-ender-chests',name:'Iron Ender Chests',cat:'armazenamento',
+   short:'Baús ender coloridos — cada cor é um inventário compartilhado diferente.',
+   where:'Craft em qualquer cor de lã. Baús da mesma cor compartilham inventário.',
+   tips:['Verde = inventário compartilhado entre Samuel e Caleb','Vermelho = inventário privado seu em qualquer lugar do mundo'],
+   tags:['armazenamento','multiplayer']},
+  {id:'capsule',name:'Capsule',cat:'armazenamento',
+   short:'Captura estruturas inteiras (base, farm, smeltery) em uma capsula portátil.',
+   where:'Craft o Capsule, aponte pra uma estrutura e clique. Carrega tudo numa cápsula.',
+   tips:['Perfeito pra mover a base sem rebuildar tudo','No hardcore: salva estruturas Tinkers valiosas'],
+   tags:['armazenamento','construção']},
+
+  // CONSTRUÇÃO EXTRA
+  {id:'construction-wand',name:'Construction Wand',cat:'construcao',
+   short:'Vara mágica que estende paredes e pisos com um clique. Coloca blocos em área.',
+   where:'Craft o wand e clique em uma superfície. Estende até onde puder.',
+   tips:['Modos: linha, plano, área — toggle com Shift+Clique','Economiza horas em fundações e paredes longas'],
+   tags:['construção','ferramentas']},
+  {id:'chalk',name:'Chalk',cat:'construcao',
+   short:'Giz que desenha símbolos e marcações no chão e nas paredes.',
+   where:'Craft o Chalk e use em qualquer superfície sólida.',
+   tips:['Marque zonas de mineração','Deixe avisos pro Caleb no mapa sem chat'],
+   tags:['construção','comunicação']},
+  {id:'floormats',name:'Floormats',cat:'construcao',
+   short:'Tapetes finos no chão em dezenas de padrões e cores.',
+   where:'JEI → buscar "Floormat" para ver todos os padrões disponíveis.',
+   tips:['Zero height — não muda o nível do chão','Perfeito para interiores de casas e vilas'],
+   tags:['construção','decoração']},
+  {id:'floralis',name:'Floralis',cat:'construcao',
+   short:'Vasos de flores decorativos com todas as flores do jogo.',
+   where:'Craft o Flowerpot avançado e insira flores.',
+   tips:['Pilha verticalmente para decoração em altura','Compatível com flores de mods (Regions Unexplored)'],
+   tags:['construção','decoração']},
+  {id:'homesteads',name:'Homesteads',cat:'construcao',
+   short:'Estruturas de fazenda vanilla+ pré-construídas que spawnaram no mundo.',
+   where:'Explore o overworld — fazendas isoladas aparecem em planícies e campos.',
+   tips:['Têm loot de farming exclusive','Bom ponto de partida alternativo ao spawn padrão'],
+   tags:['construção','worldgen']},
+
+  // MUNDO EXTRAS
+  {id:'mining-dimension',name:'Mining Dimension',cat:'mundo',
+   short:'Dimensão separada feita só de cavernas — mine lá, preserve o overworld.',
+   where:'Craft o portal e entre. É uma dimensão toda de pedra com minérios em abundância.',
+   tips:['Minérios resetam periodicamente','Deixa o overworld intacto pra buildar'],
+   tags:['dimensão','mineração']},
+  {id:'skylands',name:'Feur Dimensional Skyland',cat:'mundo',
+   short:'Dimensão de ilhas flutuantes no céu com biomas únicos e loot exclusivo.',
+   where:'Craft o portal via recipe book. Cada ilha tem tema diferente.',
+   tips:['Material de construção exclusivo só encontrado aqui','Vista incrível — boa pra base aérea'],
+   tags:['dimensão','exploração']},
+  {id:'bigger-trees',name:'Bigger Vanilla Trees',cat:'mundo',
+   short:'Árvores vanilla ficam muito maiores — florestas densas e dramáticas.',
+   where:'Automático — árvores novas geradas no mundo.',
+   tips:['Mais madeira por árvore = early game mais eficiente','Florestas ficam genuinamente densas e escuras'],
+   tags:['worldgen','terrain']},
+  {id:'quark',name:'Quark',cat:'mundo',
+   short:'Pack de centenas de micro-adições ao vanilla — novos blocos, mobs, mecânicas.',
+   where:'Tudo integrado ao vanilla. Veja o livro "Quark" no inventário para lista completa.',
+   tips:['Piranhas no overworld','Crates de madeira para armazenamento visual','Candle Cave para iluminação bonita em cavernas','Bookshelves funcionais'],
+   tags:['vanilla+','worldgen','mobs']},
+  {id:'verdant-vibes',name:'Verdant Vibes',cat:'mundo',
+   short:'Vegetação mais densa e variada — gramíneas altas, flores novas, musgo espalhado.',
+   where:'Automático — visível desde o spawn em biomas de floresta e prado.',
+   tips:['Muda o visual do mundo completamente','Combina com Regions Unexplored para overworld vivo'],
+   tags:['worldgen','terrain']},
+
+  // MULTIPLAYER
+  {id:'open-parties',name:'Open Parties and Claims',cat:'qol',
+   short:'Sistema de claim de chunks — proteja sua base do griefing entre players.',
+   where:'Craft o Claim Wand e faça o claim do chunk. GUI mostra quem é dono de cada área.',
+   tips:['No servidor local, evita acidentes de construção no terreno do outro','Party system para teleporte entre membros'],
+   tags:['multiplayer','qol']},
+  {id:'ftb-quests',name:'FTB Quests',cat:'qol',star:true,
+   short:'Sistema de quests com objetivo, recompensa e progressão guiada.',
+   where:'Abra com tecla Q (padrão). Árvore de quests por categoria.',
+   tips:['Segue a progressão recomendada do pack','Recompensas de quests dão materiais escassos early','Mostra o que você deveria fazer quando travar'],
+   tags:['missões','progressão']},
+  {id:'lootr',name:'Lootr',cat:'aventura',
+   short:'Cada jogador tem seu próprio loot em baús de dungeons. Sem disputa de drops.',
+   where:'Automático — baús de dungeon brilham diferente. Cada um abre seu próprio inventário.',
+   tips:['Samuel e Caleb têm drops independentes na mesma dungeon','Resolve conflito de "quem pega o item raro"'],
+   tags:['multiplayer','aventura']},
+  {id:'productive-bees',name:'Productive Bees',cat:'comida',
+   short:'Novas abelhas que produzem recursos: ouro, diamante, experiência, mel especial.',
+   where:'Abelhas novas spawnam em biomas específicos. Domestique com Beehive.',
+   tips:['Iron Bee produz nuggets de ferro passivamente','Experiencie Bee gera XP como recurso','Combine com MineColonies Apiary para escala'],
+   tags:['farming','automação']},
+  {id:'collectibles',name:'Collectibles',cat:'aventura',
+   short:'Figurinhas colecionáveis de mobs — cada mob tem uma figurinha craftável.',
+   where:'Drope de mobs aleatoriamente. Craft no workbench com materiais do mob.',
+   tips:['Album completo dá conquistas e recompensas','Creeper Figurine é a mais rara'],
+   tags:['colecionável','aventura']},
+];
+
+// ===== RENDER MODS =====
+let activeFilter = 'all';
+let activeSearch = '';
+
+function renderMods() {
+  const container = document.getElementById('search-results');
+  const noResults = document.getElementById('no-results');
+  const nrTerm = document.getElementById('nr-term');
+
+  let filtered = MODS;
+
+  if (activeFilter !== 'all') {
+    filtered = filtered.filter(m => m.cat === activeFilter);
+  }
+
+  if (activeSearch) {
+    const q = activeSearch.toLowerCase();
+    filtered = filtered.filter(m =>
+      m.name.toLowerCase().includes(q) ||
+      m.short.toLowerCase().includes(q) ||
+      (m.tags || []).some(t => t.includes(q))
+    );
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = '';
+    noResults.style.display = 'block';
+    nrTerm.textContent = activeSearch;
+  } else {
+    noResults.style.display = 'none';
+    container.innerHTML = filtered.map(m => `
+      <div class="card${m.star?' star':''}" onclick="openModal('${m.id}')">
+        <div class="card-cat">${getCatLabel(m.cat)}</div>
+        <div class="card-name">${m.name}</div>
+        <div class="card-short">${m.short}</div>
+        <div class="card-tags">
+          ${(m.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}
+          ${m.star?'<span class="tag green">★ destaque</span>':''}
+        </div>
+        <button class="btn-detail">Ver detalhes →</button>
+      </div>
+    `).join('');
+  }
+}
+
+function getCatLabel(cat) {
+  const c = CATS.find(c => c.id === cat);
+  return c ? c.label : cat;
+}
+
+// ===== FILTER BAR =====
+function renderFilters() {
+  const bar = document.getElementById('filter-bar');
+  bar.innerHTML = CATS.map(c => `
+    <button class="f-btn${c.id==='all'?' active':''}" onclick="setFilter('${c.id}', this)">
+      ${c.label}
+    </button>
+  `).join('');
+}
+
+function setFilter(id, btn) {
+  activeFilter = id;
+  document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMods();
+}
+
+// ===== SIDEBAR SEARCH =====
+function sidebarSearch(val) {
+  activeSearch = val;
+  if (val.length > 0) {
+    document.getElementById('mods').scrollIntoView({behavior:'smooth'});
+  }
+  renderMods();
+}
+
+// ===== MODAL =====
+function openModal(id) {
+  const mod = MODS.find(m => m.id === id);
+  if (!mod) return;
+
+  document.getElementById('modal-content').innerHTML = `
+    <button class="modal-close" onclick="closeModal()">✕ Fechar</button>
+    <div class="modal-cat">${getCatLabel(mod.cat)}${mod.star?' · ★ Destaque':''}</div>
+    <div class="modal-name">${mod.name}</div>
+    <div class="modal-section">
+      <div class="modal-section-t">O que é</div>
+      <p>${mod.short}</p>
+    </div>
+    ${mod.where ? `
+    <div class="modal-section">
+      <div class="modal-section-t">Onde ver em jogo</div>
+      <p>${mod.where}</p>
+    </div>` : ''}
+    ${mod.tips && mod.tips.length ? `
+    <div class="modal-section">
+      <div class="modal-section-t">Dicas</div>
+      <ul>${mod.tips.map(t=>`<li>${t}</li>`).join('')}</ul>
+    </div>` : ''}
+    ${mod.tags && mod.tags.length ? `
+    <div class="modal-section">
+      <div class="modal-section-t">Tags</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">
+        ${mod.tags.map(t=>`<span class="tag">${t}</span>`).join('')}
+      </div>
+    </div>` : ''}
+  `;
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.getElementById('modal').classList.remove('open');
+}
+
+// ===== TIMELINE =====
+const PHASES = [
+  {
+    title:'Sobrevivência — Dia 1',
+    content:`<div class="grid g2"><div class="card"><div class="card-name">Prioridade 1: Origins</div><div class="card-short">Escolha sua origem imediatamente ao logar. Não tem como mudar depois. No hardcore, escolha algo sem penalidade grave (Human ou Avian são seguros).</div></div><div class="card"><div class="card-name">Prioridade 2: Tinkers Early</div><div class="card-short">Leia o livro "Materials and You". Construa Part Builder com tábuas + pedra. Primeira ferramenta: cabeça de Flint + cabo de madeira. Muito mais eficiente que vanilla.</div></div><div class="card"><div class="card-name">Prioridade 3: JEI + Jade</div><div class="card-short">Memorize R = receita e U = usos no JEI. O Jade mostra HP dos mobs — cheque antes de atacar qualquer coisa desconhecida.</div></div><div class="card"><div class="card-name">Prioridade 4: Waystone</div><div class="card-short">Encontre a vila mais próxima e ative o waystone. Set home pra base. No hardcore, teleporte rápido é segurança.</div></div></div>`
+  },
+  {
+    title:'Base + Vila — Semana 1',
+    content:`<div class="card" style="margin-bottom:16px"><div class="card-name">Tinkers Smeltery</div><div class="card-short">Construa a Smeltery com blocos de Smeltery (requer Smeltery Bricks). Agora você funde Cobre + Estanho em Bronze — o melhor material do early game. Ferramentas de Bronze são 2x mais duráveis que ferro vanilla.</div></div><div class="grid g2"><div class="card"><div class="card-name">Farmer's Delight</div><div class="card-short">Craft a Skillet e faça Stew na primeira oportunidade. Regeneração passiva muda o early game completamente no hardcore.</div></div><div class="card"><div class="card-name">MineColonies</div><div class="card-short">Coloque a Supply Camp e o Town Hall. Recrute seu primeiro Builder. Ele vai construir tudo que você pedir — você só provê os materiais.</div></div></div>`
+  },
+  {
+    title:'Expansão — Mid Game',
+    content:`<div class="grid g3"><div class="card"><div class="card-name">Create Básico</div><div class="card-short">Moinho de vento → Mechanical Press para dobrar minérios. Cada ferro vira 2 nuggets = 18 por bloco em vez de 9.</div></div><div class="card"><div class="card-name">Sophisticated Backpacks</div><div class="card-short">Craft uma mochila e configure auto-pickup. Nunca mais fica sem espaço no inventário.</div></div><div class="card"><div class="card-name">Passive Skill Tree</div><div class="card-short">Distribua pontos: 5 em HP primeiro, depois velocidade de mineração ou dano dependendo do seu playstyle.</div></div></div>`
+  },
+  {
+    title:'Nether — Fase Crítica',
+    content:`<div class="callout"><div class="callout-t">Atenção — Amplified Nether</div><p>Com o Amplified Nether, o ambiente tem 256 blocos de altura. A navegação é mais difícil e os biomas estão em camadas verticais. Use o Xaero's World Map e marque waypoints antes de explorar longe do portal.</p></div><div class="grid g2"><div class="card"><div class="card-name">Ardite + Cobalt</div><div class="card-short">Ardite no upper Nether, Cobalt no lower. Juntos na Smeltery fazem Manyullyn — o melhor material do Tinkers.</div></div><div class="card"><div class="card-name">YUNG's Fortresses</div><div class="card-short">As Nether Fortresses têm muito mais salas agora. Explore com cuidado — Wither Skeletons em maior densidade.</div></div></div>`
+  },
+  {
+    title:'Twilight Forest + Bosses',
+    content:`<div class="card" style="margin-bottom:16px"><div class="card-name">Fiery Metal via Tinkers Integrations</div><div class="card-short">O Fiery Metal (drop de bosses do Twilight Forest) vira material do Tinkers via Tinkers Integrations. Ferramentas de Fiery Metal setam fogo em inimigos. Combine com Manyullyn para a ferramenta definitiva.</div></div><div class="grid g2"><div class="card"><div class="card-name">Twilight Forest (mod extra)</div><div class="card-short">Dimensão progressiva com 8+ bosses em sequência. Cada boss dropa materiais únicos. Não pule a ordem — tem soft lock intencional.</div></div><div class="card"><div class="card-name">Dungeons Enhanced</div><div class="card-short">Agora com equipamento bom, explore as dungeons subterrâneas mais profundas. Loot end-game nas últimas câmaras.</div></div></div>`
+  },
+  {
+    title:'End Game — Colônia + End',
+    content:`<div class="grid g2"><div class="card star"><div class="card-name">MineColonies Avançada</div><div class="card-short">Com colônia grande, seus colonos mineradoros e fazendeiros produzem recursos passivamente. Foque em Create Railways para conectar a colônia à base.</div></div><div class="card star"><div class="card-name">Nullscape End</div><div class="card-short">O End tem biomas novos e estruturas únicas. Explore antes de matar o Dragon — materiais únicos nas novas ilhas não reaparecem depois.</div></div></div>`
+  }
+];
+
+function setPhase(idx) {
+  document.querySelectorAll('.tl-phase').forEach((p,i) => {
+    p.classList.toggle('active', i === idx);
+  });
+  const detail = document.getElementById('phase-detail');
+  detail.innerHTML = `
+    <div class="card" style="border-color:var(--green)">
+      <div class="card-cat" style="color:var(--green)">Fase ${idx+1}</div>
+      <div class="card-name" style="margin-bottom:16px">${PHASES[idx].title}</div>
+      ${PHASES[idx].content}
+    </div>
+  `;
+}
+
+// ===== SEED COPY =====
+function copySeed() {
+  navigator.clipboard.writeText('3257840388504953787').then(() => {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  });
+}
+
+// ===== SCROLL SPY =====
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+function updateActive() {
+  const sections = ['hero','start','progressao','mods','tinkers','vilas','create','comida','aventura','construcao','transporte','qol','materiais','origens','seed'];
+  const scroll = document.getElementById('main').scrollTop + 100;
+
+  let current = sections[0];
+  for (const s of sections) {
+    const el = document.getElementById(s);
+    if (el && el.offsetTop <= scroll) current = s;
+  }
+
+  document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
+  // rough matching
+  const sectionMap = {
+    hero:'Capa', start:'Como', progressao:'Progressão',
+    mods:'Todos', tinkers:"Tinkers'", vilas:'Vilas', create:'Create',
+    comida:'Comida', aventura:'Aventura', construcao:'Construção',
+    transporte:'Transporte', qol:'QoL', materiais:'Materiais', origens:'Origins', seed:'Seeds'
+  };
+  document.querySelectorAll('.sb-link').forEach(l => {
+    if (l.textContent.trim().startsWith(sectionMap[current] || '___')) {
+      l.classList.add('active');
+    }
+  });
+}
+
+// ===== INIT =====
+renderFilters();
+renderMods();
+setPhase(0);
+document.getElementById('main').addEventListener('scroll', updateActive);
+</script>
+</body>
+</html>
